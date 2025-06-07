@@ -1,0 +1,9 @@
+Flask>=2.0.0
+Flask-JWT-Extended>=4.0.0
+firebase-admin
+google-cloud-firestore
+gunicorn
+tensorflow>=2.18
+protobuf<=3.20.3
+Pillow
+flask-cors>=6.0.0

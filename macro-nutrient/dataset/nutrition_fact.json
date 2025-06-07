@@ -1,0 +1,47 @@
+   [
+     {
+       "name": "burger",
+       "gi": 66,
+       "gl": 1.3,
+       "calories":258,
+       "protein": 30.8,
+       "carbohydrates": 1.9,
+       "fat": 13.7
+     },
+    {
+       "name": "kentang_goreng",
+       "gi": 75,
+       "gl": 22,
+       "calories":276,
+       "protein": 30.1,
+       "carbohydrates": 3.8,
+       "fat": 15.5
+     },
+     {
+       "name": "donat",
+       "gi": 75,
+       "gl": 38.3,
+       "calories": 452,
+       "protein": 4.9,
+       "carbohydrates": 51,
+       "fat": 25
+     },
+     {
+       "name": "ayam_goreng",
+       "gi": 0,
+       "gl": 0,
+       "calories": 145,
+       "protein": 20,
+       "carbohydrates": 7,
+       "fat": 1
+     },
+     {
+       "name": "mie",
+       "gi": 35,
+       "gl": 23.4,
+       "calories": 336,
+       "protein": 12,
+       "carbohydrates": 67,
+       "fat": 1
+     }
+   ]
