@@ -1,15 +1,14 @@
 import uuid
-from google.cloud import storage, firestore
-from datetime import datetime
+from google.cloud import storage
 
 class ImageStorageService:
     def __init__(self, bucket_name):
         self.bucket_name = bucket_name
-
         self.storage_client = storage.Client()
         self.bucket = self.storage_client.bucket(bucket_name)
 
     def upload_image(self, file):
+        """Fungsi untuk mengupload gambar ke GCS dan mengembalikan URL publik"""
         ext = file.filename.rsplit('.', 1)[-1]
         unique_filename = f"{uuid.uuid4()}.{ext}"
 
@@ -22,13 +21,3 @@ class ImageStorageService:
             'filename': unique_filename,
             'url': url
         }
-
-    def list_images(self):
-        docs = self.firestore_client.collection(self.collection_name).stream()
-        return [
-            {
-                'filename': doc.to_dict().get('filename'),
-                'url': doc.to_dict().get('url')
-            }
-            for doc in docs
-        ]
