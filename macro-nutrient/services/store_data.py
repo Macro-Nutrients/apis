@@ -2,35 +2,19 @@ from google.cloud import firestore
 from google.auth import exceptions
 from config import Config
 
-_db = None
-
+# Inisialisasi Firestore client menggunakan Application Default Credentials
 def initialize_firestore():
-    global _db
-    if _db is not None:
-        return _db
     try:
-        _db = firestore.Client(project=Config.PROJECT_ID)
+        db = firestore.Client(project=Config.PROJECT_ID)  # Gunakan ID proyek dari konfigurasi
         print("Firestore client berhasil diinisialisasi.")
-        return _db
+        return db
     except exceptions.DefaultCredentialsError as e:
         print(f"Gagal menginisialisasi Firestore: {e}")
         raise
 
+# Fungsi untuk menyimpan data ke Firestore
 def store_data(collection, doc_id, data):
-    db = initialize_firestore()
-    doc_ref = db.collection(collection).document(doc_id)
-    doc_ref.set(data)
-    print(f"Data untuk dokumen {doc_id} berhasil disimpan di koleksi {collection}.")
-
-def get_user_predictions(user_id):
-    db = initialize_firestore()
-    docs = db.collection("predictions")\
-             .where("user_id", "==", user_id)\
-             .order_by("created_at", direction=firestore.Query.DESCENDING)\
-             .stream()
-    results = []
-    for doc in docs:
-        data = doc.to_dict()
-        data['id'] = doc.id
-        results.append(data)
-    return results
+    db = initialize_firestore()  # Inisialisasi client Firestore
+    doc_ref = db.collection(collection).document(doc_id)  # Menentukan koleksi dan dokumen
+    doc_ref.set(data)  # Menyimpan data ke Firestore
+    print(f"Data untuk user {doc_id} berhasil disimpan.")

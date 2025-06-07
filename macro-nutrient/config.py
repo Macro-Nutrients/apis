@@ -14,4 +14,10 @@ class CorsConfig:
 
     def init_app(self, app):
         # Konfigurasi CORS global
-        CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+        CORS(app, resources={
+            r"/api/*": {
+                "origins": "*",  # Ganti sesuai kebutuhan
+                "methods": ["GET", "POST", "PUT", "DELETE"],
+                "allow_headers": ["Content-Type", "Authorization"]
+            }
+        })
