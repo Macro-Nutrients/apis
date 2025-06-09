@@ -15,7 +15,7 @@ inference_bp = Blueprint('inference', __name__)
 image_service = ImageStorageService(bucket_name='nama-bucket')
 
 
-CLASS_NAMES = ["ayam_goreng", "burger", "donat", "kentang_goreng", "mie_goreng"]
+CLASS_NAMES = ["ayam_goreng", "burger", "donat", "kentang_goreng", "mie"]
 
 def preprocess_image(image_bytes, target_size=(224, 224)):
     img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
@@ -42,7 +42,12 @@ def predict():
         preds = keras_model.predict(x)
         idx = int(np.argmax(preds[0]))
         label = CLASS_NAMES[idx]
-        confidence = float(preds[0][idx])
+        confidence = round(float(preds[0][idx]) * 100, 2)
+        confidence_with_percent = f"{confidence}%"
+
+        # pengecekan threshold confidence
+        if confidence < 85:
+            return jsonify(error=True, message="Gambar yang diinput bukan makanan. Mohon input gambar kembali."), 400
 
         doc_id = uuid.uuid4().hex
 
@@ -59,6 +64,8 @@ def predict():
                 "protein": str(nutrition_info.get("protein")) + ' gram',
                 "carbohydrates": str(nutrition_info.get("carbohydrates")) + ' gram',
                 "fat": str(nutrition_info.get("fat")) + ' gram',
+                "gi": nutrition_info.get("gi"),
+                "gl": nutrition_info.get("gl"),
             }
 
         store_data("predictions", doc_id, {
@@ -72,7 +79,7 @@ def predict():
             }
         })
 
-        return jsonify(error=False, result={"label": label, "confidence": confidence, "facts":nutrition_info, "filename":filename, "public_url":url}), 200
+        return jsonify(error=False, result={"label": label, "confidence": confidence_with_percent, "facts":nutrition_info, "filename":filename, "public_url":url}), 200
     except Exception as e:
         current_app.logger.error(f"[PREDICT ERROR] {e}")
         return jsonify(error=True, message="Gagal melakukan prediksi"), 500
