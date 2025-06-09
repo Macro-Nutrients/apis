@@ -15,7 +15,7 @@ inference_bp = Blueprint('inference', __name__)
 image_service = ImageStorageService(bucket_name='nama-bucket')
 
 
-CLASS_NAMES = ["ayam_goreng", "burger", "donat", "kentang_goreng", "mie_goreng"]
+CLASS_NAMES = ["ayam_goreng", "burger", "donat", "kentang_goreng", "mie"]
 
 def preprocess_image(image_bytes, target_size=(224, 224)):
     img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
