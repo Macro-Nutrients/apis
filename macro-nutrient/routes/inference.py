@@ -20,7 +20,7 @@ inference_bp = Blueprint('inference', __name__)
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 json_path = os.path.join(base_dir, 'dataset', 'nutrition_fact.json')
 
-CLASS_NAMES = ["ayam_goreng", "burger", "donat", "kentang_goreng", "mie_goreng"]
+CLASS_NAMES = ["ayam_goreng", "burger", "donat", "kentang_goreng", "mie"]
 
 def format_timestamp(ts):
     """

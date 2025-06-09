@@ -1,4 +1,4 @@
-# config.py
+# config.pyAdd commentMore actions
 
 import os
 from flask_cors import CORS
@@ -14,10 +14,4 @@ class CorsConfig:
 
     def init_app(self, app):
         # Konfigurasi CORS global
-        CORS(app, resources={
-            r"/api/*": {
-                "origins": "*",  # Ganti sesuai kebutuhan
-                "methods": ["GET", "POST", "PUT", "DELETE"],
-                "allow_headers": ["Content-Type", "Authorization"]
-            }
-        })
+        CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
